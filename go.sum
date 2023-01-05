@@ -1,0 +1,7 @@
+git.sr.ht/~kiba/gdn v0.0.0-20210107012546-c8d73deda151 h1:05t+A6jjI6X5YUlYZevMizPQVCi0fch2NlFkK5lXmxU=
+git.sr.ht/~kiba/gdn v0.0.0-20210107012546-c8d73deda151/go.mod h1:EHhxSqEp5OWHeUiXwqyFxWGCBVeem6ZbKAWnbcvP0mg=
+github.com/gorilla/feeds v1.1.1 h1:HwKXxqzcRNg9to+BbvJog4+f3s/xzvtZXICcQGutYfY=
+github.com/gorilla/feeds v1.1.1/go.mod h1:Nk0jZrvPFZX1OBe5NPiddPw7CfwF6Q9eqzaBbaightA=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
+github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
