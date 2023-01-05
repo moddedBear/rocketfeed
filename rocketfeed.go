@@ -37,9 +37,9 @@ func main() {
 	defer gemfeedFile.Close()
 
 	feed := &feeds.Feed{
-		Title:   *feedTitle,
-		Link:    &feeds.Link{Href: *baseString},
-		Updated: time.Now(),
+		Title: *feedTitle,
+		Link:  &feeds.Link{Href: *baseString},
+		Id:    *baseString,
 	}
 
 	items := make([]*feeds.Item, 0)
@@ -48,8 +48,7 @@ func main() {
 	for scanner.Scan() {
 		if scanner.Type() == gmi.Head1 && feed.Title == "" {
 			feed.Title = scanner.Text()
-		}
-		if scanner.Type() == gmi.Link {
+		} else if scanner.Type() == gmi.Link {
 			desc := strings.SplitN(strings.Trim(scanner.Text(), " "), " ", 2)
 			if desc[0] == "" {
 				continue
@@ -58,14 +57,17 @@ func main() {
 			if err != nil {
 				continue
 			}
-			postTitle := desc[1]
+			postDate = time.Date(postDate.Year(), postDate.Month(), postDate.Day(), 12, 0, 0, 0, postDate.Location())
+			postTitle := strings.Trim(desc[1], "- ")
 			u, err := url.Parse(scanner.URL())
 			if err != nil {
 				continue
 			}
+			itemURL := baseURL.ResolveReference(u).String()
 			newItem := &feeds.Item{
 				Title:   postTitle,
-				Link:    &feeds.Link{Href: baseURL.ResolveReference(u).String()},
+				Link:    &feeds.Link{Href: itemURL},
+				Id:      itemURL,
 				Created: postDate,
 			}
 			items = append(items, newItem)
@@ -74,7 +76,12 @@ func main() {
 
 	feed.Items = items
 	feed.Sort(func(a, b *feeds.Item) bool { return a.Created.After(b.Created) })
-	if *feedLength > 0 {
+	if len(feed.Items) > 0 {
+		feed.Updated = feed.Items[0].Created
+	} else {
+		feed.Updated = time.Now()
+	}
+	if *feedLength > 0 && *feedLength < len(feed.Items) {
 		feed.Items = feed.Items[:*feedLength]
 	}
 	atom, err := feed.ToAtom()
