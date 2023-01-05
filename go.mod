@@ -1,4 +1,4 @@
-module moddedbear/rocketfeed
+module github.com/moddedBear/rocketfeed
 
 go 1.19
 
